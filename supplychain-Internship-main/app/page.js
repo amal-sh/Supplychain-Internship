@@ -96,8 +96,8 @@ export default function Home() {
 
       {/* Features Section */}
       <section className="bg-white py-16">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="max-w-8xl mx-auto px-6 md:px-12 lg:px-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
             {/* Feature 1 */}
             <div className="flex flex-col p-3 border-2 border-neutral-500 rounded-md shadow-lg">
               <div className="mb-4 bg-green-50 w-12 h-12 flex items-center justify-center rounded-full">
@@ -187,12 +187,40 @@ export default function Home() {
                 Process large datasets efficiently with the Bulk API, enabling smooth data transfer and faster analysis
                 for your operations.
               </p>
-              <button className="mt-4 bg-green-600 text-white hover:bg-green-700 rounded-full px-6 py-3 text-sm font-semibold">
+              <Link href="/warehouse-dashboard" className="mt-4 bg-green-600 text-white hover:bg-green-700 rounded-full px-6 py-3 text-sm font-semibold">
                 Get started
-              </button>
+              </Link>
             </div>
 
             {/* Feature 4 */}
+            <div className="flex flex-col p-3 border-2 border-neutral-500 rounded-md shadow-lg">
+              <div className="mb-4 bg-green-50 w-12 h-12 flex items-center justify-center rounded-full">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-green-600"
+                >
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold mb-2">Processing Unit</h3>
+              <p className="text-gray-600 text-sm">
+                Identify and evaluate environmental and deforestation risks through our advanced analytical tools
+                integrated into the platform.
+              </p>
+              <Link href="/processing-dashboard" className="mt-4 bg-green-600 text-white hover:bg-green-700 rounded-full px-6 py-3 text-sm font-semibold">
+                Get started
+              </Link>
+            </div>
+
+            {/* Feature 5 */}
             <div className="flex flex-col p-3 border-2 border-neutral-500 rounded-md shadow-lg">
               <div className="mb-4 bg-green-50 w-12 h-12 flex items-center justify-center rounded-full">
                 <svg
@@ -218,9 +246,9 @@ export default function Home() {
                 Your data is hosted on a secure, dedicated server, ensuring maximum protection for sensitive information
                 from unauthorized access.
               </p>
-              <button className="mt-4 bg-green-600 text-white hover:bg-green-700 rounded-full px-6 py-3 text-sm font-semibold">
+              <Link href="/customer-dashboard" className="mt-4 bg-green-600 text-white hover:bg-green-700 rounded-full px-6 py-3 text-sm font-semibold">
                 Get started
-              </button>
+              </Link>
             </div>
           </div>
         </div>

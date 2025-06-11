@@ -373,23 +373,21 @@ export default function FarmerDashboard() {
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="md:w-1/2">
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-                Farmer Dashboard
+                Warehouse Dashboard
               </h1>
               <p className="text-lg text-gray-600 mb-6">
                 Manage your farm's supply chain data, track shipments, and receive instant payments—all in one secure blockchain-powered platform.
               </p>
               <div className="flex gap-4">
-                <Link href="/register-farm" className="bg-green-600 text-white hover:bg-green-700 rounded-full px-6 py-3 text-sm font-semibold">
-                  Register Farm
-                </Link>
-                <Link href="#scan-section" className="bg-white text-green-600 hover:bg-gray-100 rounded-full px-6 py-3 text-sm font-semibold border border-green-600">
+                <Link href="#scan-section" className="bg-blue-600 text-white hover:bg-blue-700 rounded-full px-6 py-3 text-sm font-semibold">
                   Register Product
                 </Link>
+                
               </div>
             </div>
             <div className="md:w-1/2">
               <img
-                src="https://unsplash.com/photos/young-farmer-standing-in-filed-holding-tablet-in-his-hands-and-examining-soybean-corp-wIynk--twug"
+                src="https://plus.unsplash.com/premium_photo-1661302828763-4ec9b91d9ce3?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW5kdXN0cmlhbCUyMHdhcmVob3VzZXxlbnwwfHwwfHx8MA%3D%3D"
                 alt="Farmer using AgriChain"
                 className="rounded-lg shadow-lg"
               />
@@ -417,16 +415,29 @@ export default function FarmerDashboard() {
                     <input type="text" id="product-name" name="productName" required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500" placeholder="e.g., Organic Apples" />
                   </div>
                   <div>
-                    <label htmlFor="harvest-date" className="block text-sm font-medium text-gray-700 mb-1"> Harvest Date </label>
+                    <label htmlFor="harvest-date" className="block text-sm font-medium text-gray-700 mb-1"> Arrival date </label>
                     <input type="date" id="harvest-date" name="harvestDate" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500" />
+                  </div>
+                  <div>
+                    <label htmlFor="harvest-date" className="block text-sm font-medium text-gray-700 mb-1"> Arrival time </label>
+                    <input type="time" id="harvest-date" name="harvestDate" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500" />
                   </div>
                   <div>
                     <label htmlFor="product-quantity" className="block text-sm font-medium text-gray-700 mb-1"> Product Quantity * </label>
                     <input type="text" id="product-quantity" name="productQuantity" required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500" placeholder="e.g., 100 kg" />
                   </div>
+                  <div>
+                    <label htmlFor="product-quantity" className="block text-sm font-medium text-gray-700 mb-1"> Batch number * </label>
+                    <input type="text" id="product-quantity" name="productQuantity" required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500" placeholder="e.g.,XYZ" />
+                  </div>
+                  <div>
+                    <label htmlFor="product-quantity" className="block text-sm font-medium text-gray-700 mb-1"> Warehouse No/ID * </label>
+                    <input type="text" id="product-quantity" name="productQuantity" required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500" placeholder="e.g., 123" />
+                  </div>
                 </div>
+                
                 {statusMessage && ( <div className={`mt-4 p-3 rounded-md text-sm ${isError ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`}> {statusMessage} </div> )}
-                <div> <button type="submit" disabled={isLoading} className="w-full bg-green-600 text-white hover:bg-green-700 rounded-lg px-6 py-3 text-base font-semibold shadow-sm disabled:opacity-50 disabled:cursor-not-allowed" > {isLoading ? "Submitting..." : "Add Product to Blockchain"} </button> </div>
+                <div> <button type="submit" disabled={isLoading} className="w-full bg-gray-600 text-white hover:bg-blue-700 rounded-lg px-6 py-3 text-base font-semibold shadow-sm disabled:opacity-50 disabled:cursor-not-allowed" > {isLoading ? "Submitting..." : "Add Product to Blockchain"} </button> </div>
               </form>
             </div>
           </div>
@@ -472,7 +483,7 @@ export default function FarmerDashboard() {
                     <button
                         onClick={fetchRecentProducts}
                         disabled={isFetchingProducts}
-                        className="bg-blue-500 hover:bg-blue-600 text-white text-sm font-semibold py-2 px-4 rounded disabled:opacity-50"
+                        className="bg-green-500 hover:bg-green-600 text-white text-sm font-semibold py-2 px-4 rounded disabled:opacity-50"
                     >
                         {isFetchingProducts ? 'Refreshing...' : 'Refresh Products'}
                     </button>
@@ -505,9 +516,9 @@ export default function FarmerDashboard() {
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-2">Register Farm</h3>
+              <h3 className="text-xl font-semibold mb-2">Register Product</h3>
               <p className="text-gray-600 mb-4">
-                Securely register your farm on the blockchain with verified location and certification data.
+                Securely register your product on the blockchain with verified location and certification data.
               </p>
               <Link href="/register-farm" className="text-green-600 font-medium text-sm">
                 Get Started →
@@ -537,9 +548,9 @@ export default function FarmerDashboard() {
                   <path d="M7 14v.01" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-2">Log Harvest Data</h3>
+              <h3 className="text-xl font-semibold mb-2">Log Warehouse Data</h3>
               <p className="text-gray-600 mb-4">
-                Record harvest details (batch, weight, quality) immutably on-chain for full traceability.
+                Record warehouse details (batch, weight, quality) immutably on-chain for full traceability.
               </p>
               <Link href="/log-harvest" className="text-green-600 font-medium text-sm">
                 Log Now →
