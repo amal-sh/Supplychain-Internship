@@ -151,9 +151,9 @@ export default function Home() {
                 Identify and evaluate environmental and deforestation risks through our advanced analytical tools
                 integrated into the platform.
               </p>
-              <button className="mt-4 bg-green-600 text-white hover:bg-green-700 rounded-full px-6 py-3 text-sm font-semibold">
+              <Link href = "/collection-point" className="mt-4 bg-green-600 text-white hover:bg-green-700 rounded-full px-6 py-3 text-sm font-semibold">
                 Get started
-              </button>
+              </Link>
             </div>
 
             {/* Feature 3 */}
