@@ -311,6 +311,61 @@ export default function FarmerDashboard() {
     }
   }
 
+   // Add warehouse-related state
+  const [showWarehouseModal, setShowWarehouseModal] = useState(false);
+  const [warehouses, setWarehouses] = useState([]);
+  const [selectedWarehouse, setSelectedWarehouse] = useState("");
+  const [requestMessage, setRequestMessage] = useState("");
+  const [isRequesting, setIsRequesting] = useState(false);
+
+   // Mock data for warehouses - in a real app, this would come from a smart contract or API
+  const mockWarehouses = [
+    { id: "WH-001", name: "Cold Storage North", location: "Nairobi", capacity: "1000 tons", available: true },
+    { id: "WH-002", name: "Dry Storage Central", location: "Mombasa", capacity: "800 tons", available: true },
+    { id: "WH-003", name: "Organic Storage West", location: "Kisumu", capacity: "500 tons", available: false },
+    { id: "WH-004", name: "Premium Storage East", location: "Nakuru", capacity: "1200 tons", available: true },
+  ];
+
+  // Function to fetch warehouses (in a real app, this would be from blockchain)
+  const fetchWarehouses = useCallback(async () => {
+    try {
+      // Simulate API/blockchain call
+      setTimeout(() => {
+        setWarehouses(mockWarehouses.filter(wh => wh.available));
+      }, 500);
+    } catch (error) {
+      console.error("Error fetching warehouses:", error);
+      setWarehouses([]);
+    }
+  }, []);
+
+  // Function to handle warehouse request
+  const handleWarehouseRequest = async () => {
+    if (!selectedWarehouse) {
+      setRequestMessage("Please select a warehouse");
+      return;
+    }
+
+    setIsRequesting(true);
+    setRequestMessage("Processing request...");
+
+    try {
+      // In a real app, this would call a smart contract function
+      // Simulate blockchain transaction
+      setTimeout(() => {
+        setRequestMessage(`Success! Request sent to ${selectedWarehouse}`);
+        setIsRequesting(false);
+        setSelectedWarehouse("");
+        // Refresh warehouse list after request
+        fetchWarehouses();
+      }, 2000);
+    } catch (error) {
+      console.error("Warehouse request failed:", error);
+      setRequestMessage("Failed to send request. Please try again.");
+      setIsRequesting(false);
+    }
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header */}
@@ -481,6 +536,149 @@ export default function FarmerDashboard() {
           </div>
         </div>
       </section>
+
+      {/* Warehouse Request Section */}
+  <section className="py-16 bg-gray-50">
+    <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
+      <div className="text-center mb-12">
+        <h2 className="text-3xl font-bold text-gray-900 mb-4">Warehouse Services</h2>
+        <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          Store your harvest in certified warehouses with optimal conditions and full traceability.
+        </p>
+      </div>
+      
+      <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-200 max-w-4xl mx-auto">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
+          <div>
+            <h3 className="text-xl font-semibold text-gray-800">Need Storage Space?</h3>
+            <p className="text-gray-600 mt-2">
+              Request space in our network of certified warehouses with temperature control and real-time monitoring.
+            </p>
+          </div>
+          <button 
+            onClick={() => {
+              setShowWarehouseModal(true);
+              fetchWarehouses();
+            }}
+            className="bg-green-600 text-white hover:bg-green-700 rounded-full px-8 py-3 text-base font-semibold whitespace-nowrap"
+          >
+            Request Warehouse
+          </button>
+        </div>
+
+        {/* Warehouse Features Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+          <div className="bg-green-50 p-6 rounded-lg">
+            <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+            </div>
+            <h4 className="font-semibold mb-2">Secure Storage</h4>
+            <p className="text-sm text-gray-600">24/7 monitored facilities with controlled access</p>
+          </div>
+          <div className="bg-green-50 p-6 rounded-lg">
+            <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                <line x1="6" y1="1" x2="6" y2="4"></line>
+                <line x1="10" y1="1" x2="10" y2="4"></line>
+                <line x1="14" y1="1" x2="14" y2="4"></line>
+              </svg>
+            </div>
+            <h4 className="font-semibold mb-2">Optimal Conditions</h4>
+            <p className="text-sm text-gray-600">Temperature and humidity controlled environments</p>
+          </div>
+          <div className="bg-green-50 p-6 rounded-lg">
+            <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+              </svg>
+            </div>
+            <h4 className="font-semibold mb-2">Instant Booking</h4>
+            <p className="text-sm text-gray-600">Reserve space instantly with smart contracts</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Warehouse Modal */}
+  {showWarehouseModal && (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <div className="bg-white rounded-xl shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="p-6">
+          <div className="flex justify-between items-center mb-6">
+            <h3 className="text-2xl font-bold text-gray-900">Request Warehouse Space</h3>
+            <button 
+              onClick={() => setShowWarehouseModal(false)}
+              className="text-gray-500 hover:text-gray-700"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+
+          <div className="mb-6">
+            <h4 className="font-semibold mb-3">Available Warehouses</h4>
+            {warehouses.length === 0 ? (
+              <p className="text-gray-500 py-4">No available warehouses found. Please check back later.</p>
+            ) : (
+              <div className="space-y-3">
+                {warehouses.map(warehouse => (
+                  <div 
+                    key={warehouse.id}
+                    className={`p-4 border rounded-lg cursor-pointer transition-colors ${selectedWarehouse === warehouse.id ? 'border-green-500 bg-green-50' : 'border-gray-200 hover:bg-gray-50'}`}
+                    onClick={() => setSelectedWarehouse(warehouse.id)}
+                  >
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <h5 className="font-medium">{warehouse.name}</h5>
+                        <p className="text-sm text-gray-600">{warehouse.location} • {warehouse.capacity}</p>
+                      </div>
+                      {selectedWarehouse === warehouse.id && (
+                        <div className="bg-green-100 text-green-800 rounded-full p-1">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                          </svg>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {requestMessage && (
+            <div className={`mb-4 p-3 rounded-md ${requestMessage.includes("Success") ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+              {requestMessage}
+            </div>
+          )}
+
+          <div className="flex justify-end gap-3 pt-4">
+            <button
+              onClick={() => setShowWarehouseModal(false)}
+              className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleWarehouseRequest}
+              disabled={isRequesting || !selectedWarehouse}
+              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isRequesting ? "Sending Request..." : "Confirm Request"}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
 
       {/* Farmer Features Grid */}
       <section className="py-16 bg-white">
