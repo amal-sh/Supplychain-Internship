@@ -3,6 +3,9 @@ import Link from "next/link";
 import { ethers } from "ethers";
 import Footer from "../../components/Footer/page";
 import { useState, useEffect, useCallback } from "react"; // Added useEffect, useCallback
+import {
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
+} from "recharts";
 export default function FarmerDashboard() {
 
 
@@ -365,6 +368,46 @@ export default function FarmerDashboard() {
       setIsRequesting(false);
     }
   };
+  //sensor data
+
+const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchSheetData = async () => {
+      const res = await fetch("https://script.google.com/macros/s/AKfycbxm1V-sNB2PiwhlPsaVZLIDE3BYkAHdkBbwIr3hiYi26FZ5TGtTnZRohnWmMmhgc1vK/exec?type=json");
+      const json = await res.json();
+
+      const parsed = json.map(entry => ({
+        ...entry,
+        timestamp: new Date(entry.timestamp).toLocaleTimeString(),
+        temperature: Number(entry.temperature),
+        humidity: Number(entry.humidity),
+        soil: Number(entry.soil),
+        rain: Number(entry.rain),
+      }));
+
+      setData(parsed);
+    };
+
+    fetchSheetData();
+    const interval = setInterval(fetchSheetData, 10000); // refresh every 30 sec
+    return () => clearInterval(interval);
+  }, []);
+
+  const graphBlock = (title, color, dataKey) => (
+    <div className="w-full h-[300px] p-4">
+      <h2 className="text-xl font-semibold mb-2">{title}</h2>
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="timestamp" />
+          <YAxis domain={['dataMin - 5', 'dataMax + 5']} />
+          <Tooltip />
+          <Line type="monotone" dataKey={dataKey} stroke={color} strokeWidth={2} dot={false} />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  );
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -536,6 +579,13 @@ export default function FarmerDashboard() {
           </div>
         </div>
       </section>
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {graphBlock("Live Temperature", "#FF5733", "temperature")}
+      {graphBlock("Live Humidity", "#2980b9", "humidity")}
+      {graphBlock("Live Soil Moisture", "#27ae60", "soil")}
+      {graphBlock("Live Rain Level", "#8e44ad", "rain")}
+    </div>
 
       {/* Warehouse Request Section */}
   <section className="py-16 bg-gray-50">

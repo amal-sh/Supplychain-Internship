@@ -1,7 +1,7 @@
 "use client";
 import { useState } from 'react';
 import Link from 'next/link';
-import { collectionPoints } from '../../lib/locations';
+// import { collectionPoints } from '../../lib/locations';
 
 export default function CollectionPoints() {
   const [selectedPoint, setSelectedPoint] = useState(collectionPoints[0]);
